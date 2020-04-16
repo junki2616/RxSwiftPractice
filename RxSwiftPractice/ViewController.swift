@@ -33,6 +33,10 @@ class ViewController: UIViewController {
         _ = Observable.from([1,2,3,4,5,"a"])
             .subscribe(onNext:{ print($0)})
         
+         //mapを使って各要素を変換して
+        _ = Observable.from([1,2,3,4,5]).map {$0 * 2}
+            .subscribe(onNext:{print($0)})
+        
         //subjectを使った処理
         let subject = PublishSubject<String>()
         
@@ -48,7 +52,6 @@ class ViewController: UIViewController {
         subject.onNext("C")
         
     }
-    
     
     @IBAction func rxTextFieldEC(_ sender: Any) {
         
