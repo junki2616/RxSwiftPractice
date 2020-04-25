@@ -14,7 +14,8 @@ import RxCocoa
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var rxTextField: UITextField!
+
+    @IBOutlet weak var rxButton: UIButton!
     @IBOutlet weak var rxLabel: UILabel!
     
     
@@ -53,7 +54,17 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func rxTextFieldEC(_ sender: Any) {
+    //以下、ボタンを押すとラベルが＋１される処理
+    
+    private let countLabel: BehaviorRelay<Int> =
+    BehaviorRelay(value: 0)
+    
+    private let disposeBag: DisposeBag = DisposeBag()
+    
+    private func bindButton() {
+        
+        rxButton.rx.tap.subscribe(onNext: {[weak self] _ in
+            self?.countLabel.accept(self!.countLabel.value + 1)}).disposed(by: disposeBag)
         
     }
 
