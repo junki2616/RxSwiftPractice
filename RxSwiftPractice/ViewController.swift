@@ -80,8 +80,7 @@ class ViewController: UIViewController {
     private func bindCountToLabel() {
         
         //VM
-        countLabel.asObservable().subscribe(onNext: {[weak self] count in
-            self?.rxLabel.text = String(count)}).disposed(by: disposeBag)
+        countLabel.asObservable().map{String($0)}.bind(to: rxLabel.rx.text).disposed(by: disposeBag)
     }
 }
 
