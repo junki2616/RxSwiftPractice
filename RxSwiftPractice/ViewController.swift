@@ -14,7 +14,7 @@ import RxCocoa
 
 class ViewController: UIViewController {
 
-
+    //V
     @IBOutlet weak var rxButton: UIButton!
     @IBOutlet weak var rxLabel: UILabel!
     
@@ -52,21 +52,36 @@ class ViewController: UIViewController {
         subject.onNext("B")
         subject.onNext("C")
         
+        
+        bindButton()
+        bindCountToLabel()
+        
     }
     
     //以下、ボタンを押すとラベルが＋１される処理
     
+    //M
     private let countLabel: BehaviorRelay<Int> =
     BehaviorRelay(value: 0)
     
     private let disposeBag: DisposeBag = DisposeBag()
     
+    
+    //ボタンが押されたらRelayに通知
     private func bindButton() {
-        
+        //VM
         rxButton.rx.tap.subscribe(onNext: {[weak self] _ in
             self?.countLabel.accept(self!.countLabel.value + 1)}).disposed(by: disposeBag)
         
     }
-
+    
+    //通知後、ラベルに反映
+    
+    private func bindCountToLabel() {
+        
+        //VM
+        countLabel.asObservable().subscribe(onNext: {[weak self] count in
+            self?.rxLabel.text = String(count)}).disposed(by: disposeBag)
+    }
 }
 
